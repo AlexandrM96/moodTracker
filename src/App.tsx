@@ -1,26 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {JSXElementConstructor} from 'react';
+import {Routes, Route} from 'react-router-dom';
+import Login from "./components/Auth/Login";
+import Registration from "./components/Auth/Registration";
+import MainPage from "./components/MainPage/MainPage";
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default function App(): JSX.Element {
+    return (
+        <div className="App">
+            <Routes>
+                <Route path="/" element={<MainPage/>}/>
+                <Route path="/auth/login" element={<Login/>}/>
+                <Route path="/auth/registration" element={<Registration/>}/>
+            </Routes>
+        </div>
+    );
 }
 
-export default App;

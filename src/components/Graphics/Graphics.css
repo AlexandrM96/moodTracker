@@ -1,0 +1,20 @@
+.graphics-aside__title {
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 19px;
+    color: #838383;
+    writing-mode: vertical-lr;
+    text-align: center;
+    transform: rotate(-180deg);
+    margin-right: 10px;
+}
+
+.graphics-title {
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    color: #000000;
+    width: 255px;
+}

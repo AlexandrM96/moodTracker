@@ -1,0 +1,22 @@
+.mood-button {
+    width: 60px;
+    height: 60px;
+    background: #8D91FE;
+    border-radius: 4px;
+    color: #FFFFFF;
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 18px;
+    border: none;
+    cursor: pointer;
+}
+
+.mood-button:hover {
+    background: #6266c6;
+}
+
+.mood-button:last-child {
+    margin: 0;
+}
