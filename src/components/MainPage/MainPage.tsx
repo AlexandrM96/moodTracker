@@ -4,9 +4,23 @@ import AverageTodayMood from "../AverageTodayMood/AverageTodayMood";
 import Graphics from "../Graphics/Graphics";
 import DownBar from "../DownBar/DownBar";
 import {Link} from 'react-router-dom';
+import {api} from "../../api/api";
 import './MainPage.css';
 
 export default function MainPage(): JSX.Element {
+
+    const baseUrl = `http://moodtracker.test`;
+
+    const arrayMoodTracker: string[] = [];
+    fetch(`${baseUrl}/api`)
+        .then((response) => response.json())
+        .then((data) => {
+                arrayMoodTracker.push(data);
+            }
+        )
+        .catch((error) => {
+            console.error('Error:', error);
+        });
 
     const date: string = new Date().toLocaleDateString();
 
@@ -47,7 +61,7 @@ export default function MainPage(): JSX.Element {
                     </div>
                     <div className="d-flex p-4 main-page__container-data">
                         <AverageTodayMood/>
-                        <Graphics/>
+                        <Graphics children={arrayMoodTracker}/>
                     </div>
                     <div className=" d-flex mt-5 p-4 main-page__container-data">
                         <DownBar/>
