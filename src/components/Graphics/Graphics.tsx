@@ -26,7 +26,7 @@ ChartJS.register(
 
 export default function Graphics(): JSX.Element {
 
-    const [flagGraphics, setFlagGraphics] = useState('month');
+    const [flagGraphics, setFlagGraphics] = useState<string>('month');
 
     const mounth: number[] = useSelector((state: RootState) => state.counter.avg_month);
 
