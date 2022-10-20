@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -10,8 +10,8 @@ import {
     Legend,
 } from 'chart.js';
 import {Line} from 'react-chartjs-2';
-import {faker} from "@faker-js/faker";
-import {GraphicsProps} from "./GraphicsProps";
+import {useSelector} from "react-redux";
+import {RootState} from "../../store/store";
 import './Graphics.css';
 
 ChartJS.register(
@@ -24,7 +24,13 @@ ChartJS.register(
     Legend
 );
 
-export default function Graphics({children, ...props}: GraphicsProps): JSX.Element {
+export default function Graphics(): JSX.Element {
+
+    const [flagGraphics, setFlagGraphics] = useState('month');
+
+    const mounth: number[] = useSelector((state: RootState) => state.counter.avg_month);
+
+    const week: number[] = useSelector((state: RootState) => state.counter.avg_week);
 
     const options = {
         responsive: true,
@@ -91,7 +97,7 @@ export default function Graphics({children, ...props}: GraphicsProps): JSX.Eleme
         datasets: [
             {
                 // label: 'Dataset 2',
-                data: labels.map(() => faker.datatype.number({min: 0, max: 10})),
+                data: flagGraphics === 'month' ? mounth : week,
                 borderColor: '#369AFC',
                 backgroundColor: '#369AFC',
             },
@@ -102,7 +108,13 @@ export default function Graphics({children, ...props}: GraphicsProps): JSX.Eleme
         <div className=" d-flex ps-5 ms-5 grafik">
             <div className="graphics-aside__title">Настроение 1-10</div>
             <div>
-                <div className="graphics-title">График настроения</div>
+                <div className='d-flex justify-content-between'>
+                    <div className="graphics-title">График настроения</div>
+                    <div className="graphics-container-buttons">
+                        <button onClick={() => setFlagGraphics('week')} className='mx-2'>Неделя</button>
+                        <button onClick={() => setFlagGraphics('month')} className='mx-2'>Месяц</button>
+                    </div>
+                </div>
                 <div className='graphics-container'>
                     <Line height={257} width={745} options={options} data={data}/>
                 </div>

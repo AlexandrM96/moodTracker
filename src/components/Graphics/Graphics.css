@@ -18,3 +18,21 @@
     color: #000000;
     width: 255px;
 }
+
+.graphics-container-buttons button {
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 18px;
+    color: #FFFFFF;
+    background: #369AFC;
+    padding: 5px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+}
+
+.graphics-container-buttons button:hover {
+    background: #2288f8;
+}
