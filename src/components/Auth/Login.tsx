@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
+// import {ApiUserLogin} from "../../api/api";
+import {Link, useNavigate} from "react-router-dom";
 import './Auth.css';
-import {ApiUserLogin} from "../../api/api";
-import {Link} from "react-router-dom";
 
 export default function Login(): JSX.Element {
 
@@ -11,6 +11,10 @@ export default function Login(): JSX.Element {
             password: ""
         }
     });
+
+    const navigate = useNavigate();
+
+    const baseUrl = `http://moodtracker.test`;
 
     const changeInputLogin = (event: React.ChangeEvent<HTMLInputElement>) => {
         event.persist()
@@ -22,11 +26,43 @@ export default function Login(): JSX.Element {
         })
     };
 
-    const loginUser = () => {
+    const loginUser = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
         const name: string = login.login;
         const password: string = login.password;
         ApiUserLogin(name, password);
     };
+
+    const ApiUserLogin = (login: string, password: string) => {
+
+        fetch(
+            `${baseUrl}/jwt/login`
+            , {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    "email": login,
+                    "password": password,
+                })
+            }).then((response) => response.json())
+            .then((data) => {
+                    if (!data.message) {
+                        console.log(data.data);
+                        localStorage.setItem('tokenAuth', data.data.token);
+                        navigate("/");
+                    } else {
+                        //ошибка
+                        console.log(data)
+                    }
+                }
+            )
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
 
     return (
         <div className="auth">

@@ -1,13 +1,33 @@
-import {createSlice} from '@reduxjs/toolkit'
-import type {PayloadAction} from '@reduxjs/toolkit'
-import {ApiArray} from '../interface'
+import {createSlice} from '@reduxjs/toolkit';
+import type {PayloadAction} from '@reduxjs/toolkit';
+import {ApiArray} from '../interface';
 
 const initialState: ApiArray = {
-    user: false,
+    user: {
+        id: 0,
+        email: '',
+        name: '',
+        last_name: '',
+        middle_name: '',
+        phone: '',
+        phone_short: '',
+        permissions: '',
+        is_activated: false,
+        activated_at: '',
+        last_login: '',
+        is_superuser: 0,
+        property: '',
+        created_at: '',
+        updated_at: '',
+        deleted_at: '',
+        phone_list: []
+    },
     today: '',
     avg_today: 0,
     avg_week: [],
     avg_month: [],
+    users_mood: [],
+    already_checked: false
 }
 
 export const counterSlice = createSlice({
@@ -23,7 +43,7 @@ export const counterSlice = createSlice({
         },
     },
 })
-
+console.log(initialState);
 
 
 // Action creators are generated for each case reducer function

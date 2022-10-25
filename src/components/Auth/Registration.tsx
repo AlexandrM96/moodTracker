@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {ApiUserRegistration} from "../../api/api";
-import {Link} from "react-router-dom";
+// import {ApiUserRegistration} from "../../api/api";
+import {Link, useNavigate} from "react-router-dom";
 import './Auth.css';
 
 export default function Registration(): JSX.Element {
@@ -9,9 +9,14 @@ export default function Registration(): JSX.Element {
         return {
             login: "",
             eMail: "",
-            password: ""
+            password: "",
+            password_confirmation: ""
         }
     });
+
+    const navigate = useNavigate();
+
+    const baseUrl = `http://moodtracker.test`;
 
     const changeInputRegistration = (event: React.ChangeEvent<HTMLInputElement>) => {
         event.persist()
@@ -23,11 +28,75 @@ export default function Registration(): JSX.Element {
         })
     };
 
-    const registrationUser = () => {
+    const registrationUser = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
         const name: string = registration.login;
         const password: string = registration.password;
         const eMail: string = registration.eMail;
-        ApiUserRegistration(name, eMail, password);
+        const passwordConfirmation: string = registration.password_confirmation;
+        ApiUserRegistration(name, eMail, password, passwordConfirmation);
+    };
+
+    const ApiUserRegistration = (login: string, email: string, password: string, passwordConfirmation: string) => {
+
+        fetch(
+            `${baseUrl}/jwt/register`
+            , {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "name": login,
+                    "email": email,
+                    "password": password,
+                    "password_confirmation": passwordConfirmation
+                })
+            }).then((response) => response.json())
+            .then((data) => {
+                    if (!data.message) {
+                        //ошибка
+                        console.log(data);
+                    } else {
+                        console.log(data.code);
+                        ApiUserRegistrationActivate(data.code);
+                    }
+                }
+            )
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    };
+
+    const ApiUserRegistrationActivate = (code: string) => {
+
+        fetch(
+            `${baseUrl}/jwt/activate`
+            , {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "code": code,
+                })
+            }).then((response) => response.json())
+            .then((data) => {
+                    if (!data.message) {
+                        //ошибка
+                        console.log(data);
+                    } else {
+                        console.log(data);
+                        localStorage.setItem('tokenAuth', data.data.token);
+                        navigate("/auth/login");
+                    }
+                }
+            )
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     };
 
     return (
@@ -60,7 +129,7 @@ export default function Registration(): JSX.Element {
                                         onChange={changeInputRegistration}
                                     />
                                 </div>
-                                <div className="mb-5 form-group content-form__form-input">
+                                <div className="mb-3 form-group content-form__form-input">
                                     <input
                                         name="password"
                                         type="password"
@@ -71,8 +140,19 @@ export default function Registration(): JSX.Element {
                                         onChange={changeInputRegistration}
                                     />
                                 </div>
+                                <div className="mb-5 form-group content-form__form-input">
+                                    <input
+                                        name="password_confirmation"
+                                        type="password"
+                                        className="form-control"
+                                        id="registerPasswordConfirmation"
+                                        placeholder="Повторите пароль"
+                                        value={registration.password_confirmation}
+                                        onChange={changeInputRegistration}
+                                    />
+                                </div>
                                 <button onClick={registrationUser}
-                                        type="submit" className="btn btn-default content-form__form-button">
+                                        className="btn btn-default content-form__form-button">
                                     Регистрация
                                 </button>
                             </form>
