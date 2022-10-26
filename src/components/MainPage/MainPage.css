@@ -37,6 +37,17 @@
     color: #FFFFFF;
 }
 
+.main-page__data-element__name {
+    background: #F8F8F8;
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 18px;
+    color: #7C7B7B;
+    border-radius: 4px;
+}
+
 .main-page__data-element__button {
     background: #8D91FE;
     border-radius: 4px;

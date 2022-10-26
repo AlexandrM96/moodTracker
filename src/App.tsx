@@ -3,13 +3,17 @@ import {Routes, Route, Navigate, useNavigate} from 'react-router-dom';
 import Login from "./components/Auth/Login";
 import Registration from "./components/Auth/Registration";
 import MainPage from "./components/MainPage/MainPage";
+import {useSelector} from "react-redux";
 import {useDispatch} from "react-redux";
 import {increment} from './store/slice';
 import {ApiArray} from "./interface";
+import {RootState} from './store/store';
 
 export default function App(): JSX.Element {
 
     const [isLogin, setIsLogin] = useState<boolean>(false);
+
+    const login: boolean = useSelector((state: RootState) => state.counter.login_page);
 
     const dispatch = useDispatch();
 
@@ -20,6 +24,7 @@ export default function App(): JSX.Element {
     const token: string | null = localStorage.getItem('tokenAuth');
 
     useEffect(() => {
+        // !token && navigate("/", {replace: true});
         fetch(
             `${baseUrl}/api/general`
             , {
@@ -28,23 +33,24 @@ export default function App(): JSX.Element {
                     'Authorization': `Bearer ${token}`
                 }
             }).then((response) => response.json())
-            .then((data) => {
+            .then((data: ApiArray) => {
                     !data.status ? setIsLogin(false) : setIsLogin(true);
                     !isLogin ? navigate("/") : navigate("/auth/login");
+                    console.log(data)
                     dispatch(increment(data));
                 }
             )
             .catch((error) => {
                 console.error('Error:', error);
             });
-    }, [])
+    }, [token])
 
     return (
         <div className="App">
             <Routes>
                 <Route path='/'
                        element={(() => {
-                           if (!isLogin) {
+                           if (!login) {
                                return <Navigate to={`/auth/login`}/>
                            } else {
                                return <MainPage/>

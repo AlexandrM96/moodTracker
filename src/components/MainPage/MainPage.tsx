@@ -3,12 +3,23 @@ import Evaluation from "../Eveluation/Evaluation";
 import AverageTodayMood from "../AverageTodayMood/AverageTodayMood";
 import Graphics from "../Graphics/Graphics";
 import DownBar from "../DownBar/DownBar";
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
+import {useSelector} from "react-redux";
+import {RootState} from "../../store/store";
 import './MainPage.css';
 
 export default function MainPage(): JSX.Element {
 
+    const userName: string = useSelector((state: RootState) => state.counter.user.name);
+
+    const navigate = useNavigate();
+
     const date: string = new Date().toLocaleDateString();
+
+    const outUser = () => {
+        localStorage.setItem('tokenAuth', '');
+        navigate('/auth/login');
+    }
 
     return (
         <div className=" py-4 main-page">
@@ -23,15 +34,12 @@ export default function MainPage(): JSX.Element {
                                 {date}
                             </div>
                         </div>
-                        <div className="col-xl-2">
-                            <button className="py-2 px-4 main-page__data-element__button"
-                                    data-request="session::onLogout" data-request-data="redirect: 'auth/login'">
-                                {/*{% if user %}*/}
-                                {/*Выход*/}
-                                {/*{% else %}*/}
-                                {/*Войти*/}
-                                {/*{% endif %}*/}
-                                <Link className='main-page__data-element__button-link' to='/auth/login'>Войти</Link>
+                        <div className="col-xl-2 d-flex align-items-center">
+                            <div className='py-2 px-4 main-page__data-element__name me-2'>
+                                {userName}
+                            </div>
+                            <button onClick={outUser} className="py-2 px-4 main-page__data-element__button">
+                                Выйти
                             </button>
                         </div>
                     </div>

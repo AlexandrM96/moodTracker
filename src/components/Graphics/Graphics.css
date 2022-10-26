@@ -19,7 +19,7 @@
     width: 255px;
 }
 
-.graphics-container-buttons button {
+.graphics-container-buttons__button {
     font-family: 'Mulish';
     font-style: normal;
     font-weight: 700;
@@ -33,6 +33,24 @@
     cursor: pointer;
 }
 
-.graphics-container-buttons button:hover {
+.graphics-container-buttons__button:hover {
     background: #2288f8;
+}
+
+.graphics-container-buttons__button-active {
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 18px;
+    color: #FFFFFF;
+    background: #076ce0;
+    padding: 5px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+}
+
+.graphics-container-buttons__button-active:hover {
+    background: #055dc8;
 }

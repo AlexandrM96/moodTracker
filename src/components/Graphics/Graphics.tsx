@@ -105,14 +105,28 @@ export default function Graphics(): JSX.Element {
     };
 
     return (
-        <div className=" d-flex ps-5 ms-5 grafik">
+        <div className=" d-flex ps-5 ms-5 graphics">
             <div className="graphics-aside__title">Настроение 1-10</div>
             <div>
                 <div className='d-flex justify-content-between'>
                     <div className="graphics-title">График настроения</div>
                     <div className="graphics-container-buttons">
-                        <button onClick={() => setFlagGraphics('week')} className='mx-2'>Неделя</button>
-                        <button onClick={() => setFlagGraphics('month')} className='mx-2'>Месяц</button>
+                        <button onClick={() => setFlagGraphics('week')}
+                                className={flagGraphics === 'week' ?
+                                    'mx-2 graphics-container-buttons__button-active'
+                                    :
+                                    'mx-2 graphics-container-buttons__button'}
+                        >
+                            Неделя
+                        </button>
+                        <button onClick={() => setFlagGraphics('month')}
+                                className={flagGraphics === 'month' ?
+                                    'mx-2 graphics-container-buttons__button-active'
+                                    :
+                                    'mx-2 graphics-container-buttons__button'}
+                        >
+                            Месяц
+                        </button>
                     </div>
                 </div>
                 <div className='graphics-container'>

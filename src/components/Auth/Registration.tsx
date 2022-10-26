@@ -85,12 +85,11 @@ export default function Registration(): JSX.Element {
             }).then((response) => response.json())
             .then((data) => {
                     if (!data.message) {
-                        //ошибка
-                        console.log(data);
+                        console.log('dddd', data);
+                        localStorage.setItem('tokenAuth', data.data.token);
+                        navigate("/");
                     } else {
                         console.log(data);
-                        localStorage.setItem('tokenAuth', data.data.token);
-                        navigate("/auth/login");
                     }
                 }
             )

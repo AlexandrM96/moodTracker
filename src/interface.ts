@@ -27,4 +27,5 @@ export interface ApiArray {
     avg_month: number[];
     users_mood: any[];
     already_checked: boolean;
+    login_page: boolean;
 }
